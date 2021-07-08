@@ -20,41 +20,41 @@
 
 ### 변수들
 
-```
-int LeftPosX
+```cs
+int LeftPosX;
 // 모니터의 왼쪽 x 좌표
 
-int RightPosX
+int RightPosX;
 // 창이 오른쪽에 딱 붙을때의 x 좌표
 
-int MidPosX
+int MidPosX;
 // 창이 정 중앙에 있을때의 x 좌표
 
-int MidPosY
+int MidPosY;
 // 창이 정 중앙에 있을때의 y 좌표
 
-int TopPosY
+int TopPosY;
 // 모니터의 꼭대기 y 좌표
 
-int BottomPosY
+int BottomPosY;
 // 창이 아레에 딱 붙을때의 y 좌표
 
-Vector2Int ScreenSize
+Vector2Int ScreenSize;
 // 현재 게임 화면의 크기
 
-Vector2Int TopCenter
-Vector2Int TopLeft
-Vector2Int TopRight
+Vector2Int TopCenter;
+Vector2Int TopLeft;
+Vector2Int TopRight;
 // 창이 모니터 맨 위쪽에 있을 수 있는 기준 좌표들
 
-Vector2Int MiddleCenter
-Vector2Int MiddleLeft
-Vector2Int MiddleRight
+Vector2Int MiddleCenter;
+Vector2Int MiddleLeft;
+Vector2Int MiddleRight;
 // 창이 모니터 정 중앙에 있을 수 있는 기준 좌표들
 
-Vector2Int BottomCenter
-Vector2Int BottomLeft
-Vector2int BottomRight
+Vector2Int BottomCenter;
+Vector2Int BottomLeft;
+Vector2int BottomRight;
 // 창이 모니터 맨 아레에 있을 수 있는 기준 좌표들
 
 ```
