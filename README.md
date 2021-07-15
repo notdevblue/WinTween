@@ -1,27 +1,37 @@
 # WinTween
 
-## 라이선스 조심해요.
-
 리듬닥터의 창 움직이는 연출을 아마도 간단하게 만들 수 있는 코드 덩어리에요.</br>
 아직 개발중이라 조금 아쉬우거나 사용하기 애매할 수 있긴 합니다.</br>
-주 모니터 기준으로 움직입니다.
+주 모니터 기준으로 움직입니다.</br>
+</br>
+WinTween makes Window-moving-effects more easier then raw WinAPI.</br>
+It's still developing, so this could be little disappointing or bit awkward to use.</br>
+Now, WinTween only works with your main monitor.</br>
 </br>
 ### 버그는 Issues 에 남겨주면 고쳐드리겟슴
+### Bug, (Issues) => { fixed; }
 
 * * *
 
-### 사용법
+### 사용법 / How to use
 
 1. WindowCore 와 WindowEffects 를 유니티 프로젝트에 추가합니다.
 2. WindowEffects 를 게임오브젝트 어딘가에다가 붙여둡니다.
 3. 사용합니다
+
+1. Add WindowCore and WindowEffects to your unity project
+2. Add WindowEffects to random GameObject
+3. use
+
 <br></br>
 #### 윈도우의 창 위치 기준점은 창의 정 중앙이 아닌 왼쪽 위를 기준으로 잡습니다.
+#### Window origin position works same with WinAPI
 *(960,540) 으로 위치를 설정하면 모니터 중앙에 위치하지 않는다는 의미.*
 
 * * *
 
-### 변수들
+### 변수들 / variables
+*English comments at code*
 
 ```cs
 int LeftPosX;
@@ -62,7 +72,8 @@ Vector2int BottomRight;
 
 ```
 
-### 함수들
+### 함수들 / Functions
+*English comments at code*
 
 ```cs
 
