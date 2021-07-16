@@ -18,7 +18,7 @@ Now, WinTween only works with your main monitor.</br>
 1. WindowCore 와 WindowEffects 를 유니티 프로젝트에 추가합니다.
 2. WindowEffects 를 게임오브젝트 어딘가에다가 붙여둡니다.
 3. 사용합니다
-
+* * *
 1. Add WindowCore and WindowEffects to your unity project
 2. Add WindowEffects to random GameObject
 3. use
