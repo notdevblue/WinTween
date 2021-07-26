@@ -4,9 +4,11 @@ using System.Collections.Generic;
 using System.Runtime.InteropServices;
 using UnityEngine;
 
-abstract public class WindowCore : MonoBehaviour
+namespace WinTween
 {
-    #region WinAPI import
+    abstract public class WindowCore : MonoBehaviour
+    {
+        #region WinAPI import
 #if UNITY_STANDALONE_WIN || UNITY_EDITOR
     [DllImport("user32.dll", CharSet = CharSet.Auto, ExactSpelling = true)]
     private static extern IntPtr GetActiveWindow();
@@ -33,10 +35,10 @@ abstract public class WindowCore : MonoBehaviour
     }
 #endif
     #endregion
-
-    // Sets current application's window position
-    // do not work when fullscreen
-    #region SetLocation Function
+    
+        // Sets current application's window position
+        // do not work when fullscreen
+        #region SetLocation Function
     /// <summary>
     /// Changes Location of application
     /// </summary>
@@ -66,9 +68,9 @@ abstract public class WindowCore : MonoBehaviour
         SetWindowPos(activeHwnd, 0, pos.x, pos.y, screen.x, screen.y, 1);
     }
     #endregion
-
-    // Sets current application's window size
-    #region SetWindowSize Function
+    
+        // Sets current application's window size
+        #region SetWindowSize Function
     /// <summary>
     /// Changes size of application
     /// </summary>
@@ -109,44 +111,44 @@ abstract public class WindowCore : MonoBehaviour
         MoveWindow(activeHwnd, location.x, location.y, size.x, size.y, true);
     }
     #endregion
-
     
-
-    ///<summary>
-    /// Returns currnet application's window postiion
-    ///</summary>
-    public Vector2Int GetLocation()
-    {
-        RECT rect;
-        GetWindowRect(new HandleRef(this, this.activeHwnd), out rect);
-
-        return new Vector2Int(rect.Left, rect.Top);
-    }
-
-    /// <summary>
-    /// Returns current application's window size
-    /// </summary>
-    /// <returns>current window size</returns>
-    public Vector2Int GetCurrentSize()
-    {
-        RECT rect;
-        GetWindowRect(new HandleRef(this, this.activeHwnd), out rect);
-
-        return new Vector2Int(rect.Right - rect.Left, rect.Bottom - rect.Top);
-    }
-
-    /// <summary>
-    /// Resets screenpoint vars
-    /// </summary>
-    public void ResetPositionVar()
-    {
-        RECT rect;
-        GetWindowRect(new HandleRef(this, this.activeHwnd), out rect);
-
-        ResetPoints();
-    }
-
-    #region var
+        
+    
+        ///<summary>
+        /// Returns currnet application's window postiion
+        ///</summary>
+        public Vector2Int GetLocation()
+        {
+            RECT rect;
+            GetWindowRect(new HandleRef(this, this.activeHwnd), out rect);
+    
+            return new Vector2Int(rect.Left, rect.Top);
+        }
+    
+        /// <summary>
+        /// Returns current application's window size
+        /// </summary>
+        /// <returns>current window size</returns>
+        public Vector2Int GetCurrentSize()
+        {
+            RECT rect;
+            GetWindowRect(new HandleRef(this, this.activeHwnd), out rect);
+    
+            return new Vector2Int(rect.Right - rect.Left, rect.Bottom - rect.Top);
+        }
+    
+        /// <summary>
+        /// Resets screenpoint vars
+        /// </summary>
+        public void ResetPositionVar()
+        {
+            RECT rect;
+            GetWindowRect(new HandleRef(this, this.activeHwnd), out rect);
+    
+            ResetPoints();
+        }
+    
+        #region var
     // Has current window's handle
     // be carefull when working in unity editor.
     private IntPtr activeHwnd;
@@ -160,12 +162,14 @@ abstract public class WindowCore : MonoBehaviour
     /// </summary>
     private RECT rc;
     #endregion
+    
+        // callback delegate
+        public delegate void WindowCallBack();
 
-    // callback delegate
-    public delegate void WindowCallBack();
-
-
-    #region Position var
+        // static functions
+        static private WindowCore inst; 
+    
+        #region Position var
     /// <summary>
     /// Left x position of your monitor
     /// </summary>
@@ -194,8 +198,8 @@ abstract public class WindowCore : MonoBehaviour
     /// </summary>
     public int BottomPosY { get; private set; }
     #endregion
-
-    #region Screen size var
+    
+        #region Screen size var
     // screen size var
     private int sizeX;
     private int sizeY;
@@ -252,12 +256,49 @@ abstract public class WindowCore : MonoBehaviour
     /// Bottom right position of your monitior
     /// </summary>
     public Vector2Int BottomRight  { get; private set; }
-    #endregion
+        #endregion
+
+        #region ToMiddle
+
+        /// <summary>
+        /// 창을 화면 가온데로 이동시킵니다.
+        /// </summary>
+        /// <param name="speed">이동 속도</param>
+        /// <param name="callBack"></param>
+        /// <param name="snap">에니에이션 없이 이동 여부</param>
+        /// <returns></returns>
+        static public void Middle(float speed, bool snap = false, WindowCallBack callBack = null)
+        {
+            inst.StartCoroutine(inst.ToMiddle(speed, snap, callBack));
+        }
+        private IEnumerator ToMiddle(float speed, bool snap = false, WindowCallBack callBack = null)
+        {
+            // Midpos 잘못잡힘
+            if (snap)
+            {
+                SetLocation(MiddleCenter);
+                yield break;
+            }
+
+            float degree = 0.0f;
+            speed /= 100.0f;
+
+            while (degree < Mathf.PI / 2.0f)
+            {
+                degree += speed; // TODO : 끝내지 않음
+
+                //SetLocation();
+            }
 
 
-    private void Awake()
-    {
-        #region ## DO NOT EDIT ##
+            callBack?.Invoke();
+        }
+
+        #endregion
+
+        protected virtual void Awake()
+        {
+            #region ## DO NOT EDIT ##
         // init core var
         activeHwnd = GetActiveWindow();
         ResetPoints();
@@ -266,44 +307,50 @@ abstract public class WindowCore : MonoBehaviour
         Screen.SetResolution(1920, 1080, false);
         SetWindowSize(1280, 720);
 
-        #endregion
+            #endregion
+
+            inst = this;
+        }
+    
+        private void ResetPoints()
+        {
+            // Gets current window's size
+            RECT rect;
+            GetWindowRect(new HandleRef(this, this.activeHwnd), out rect);
+            rc = rect;
+    
+            // init size var
+            sizeX = rect.Right  - rect.Left;
+            sizeY = rect.Bottom - rect.Top;
+    
+            // init size vector
+            ScreenSize = new Vector2Int(sizeX, sizeY);
+    
+            // init pos var
+            LeftPosX  = -8; // 0 doesn't moves window to absolute coner
+            MidPosX   = Screen.currentResolution.width / 2 - sizeX / 2;
+            RightPosX = Screen.currentResolution.width     - sizeX;
+    
+            TopPosY    = -8; // 0 doesn't moves window to absolute coner
+            MidPosY    = Screen.currentResolution.height / 2 - sizeY / 2;
+            BottomPosY = Screen.currentResolution.height     - sizeY;
+    
+    
+            // init pos vector
+            TopCenter = new Vector2Int(MidPosX, TopPosY);
+            TopLeft   = new Vector2Int(LeftPosX, TopPosY);
+            TopRight  = new Vector2Int(RightPosX, TopPosY);
+    
+            MiddleCenter = new Vector2Int(MidPosX, MidPosY);
+            MiddleLeft   = new Vector2Int(LeftPosX, MidPosY);
+            MiddleRight  = new Vector2Int(RightPosX, MidPosY);
+    
+            BottomCenter = new Vector2Int(MidPosX, BottomPosY);
+            BottomLeft   = new Vector2Int(LeftPosX, BottomPosY);
+            BottomRight  = new Vector2Int(RightPosX, BottomPosY);
+        }
     }
 
-    private void ResetPoints()
-    {
-        // Gets current window's size
-        RECT rect;
-        GetWindowRect(new HandleRef(this, this.activeHwnd), out rect);
-        rc = rect;
-
-        // init size var
-        sizeX = rect.Right  - rect.Left;
-        sizeY = rect.Bottom - rect.Top;
-
-        // init size vector
-        ScreenSize = new Vector2Int(sizeX, sizeY);
-
-        // init pos var
-        LeftPosX  = -8; // 0 doesn't moves window to absolute coner
-        MidPosX   = Screen.currentResolution.width / 2 - sizeX / 2;
-        RightPosX = Screen.currentResolution.width     - sizeX;
-
-        TopPosY    = -8; // 0 doesn't moves window to absolute coner
-        MidPosY    = Screen.currentResolution.height / 2 - sizeY / 2;
-        BottomPosY = Screen.currentResolution.height     - sizeY;
-
-
-        // init pos vector
-        TopCenter = new Vector2Int(MidPosX, TopPosY);
-        TopLeft   = new Vector2Int(LeftPosX, TopPosY);
-        TopRight  = new Vector2Int(RightPosX, TopPosY);
-
-        MiddleCenter = new Vector2Int(MidPosX, MidPosY);
-        MiddleLeft   = new Vector2Int(LeftPosX, MidPosY);
-        MiddleRight  = new Vector2Int(RightPosX, MidPosY);
-
-        BottomCenter = new Vector2Int(MidPosX, BottomPosY);
-        BottomLeft   = new Vector2Int(LeftPosX, BottomPosY);
-        BottomRight  = new Vector2Int(RightPosX, BottomPosY);
-    }
 }
+
+
