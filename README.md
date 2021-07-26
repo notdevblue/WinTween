@@ -17,11 +17,12 @@ Now, WinTween only works with your main monitor.</br>
 
 1. WindowCore 와 WindowEffects 를 유니티 프로젝트에 추가합니다.
 2. WindowEffects 를 게임오브젝트 어딘가에다가 붙여둡니다.
-3. 사용합니다
+3. 네임스페이스를 사용할 스크립트에게 추가합니다.
+
 * * *
 1. Add WindowCore and WindowEffects to your unity project
 2. Add WindowEffects to random GameObject
-3. use
+3. Add namespace to your script
 
 <br></br>
 #### 윈도우의 창 위치 기준점은 창의 정 중앙이 아닌 왼쪽 위를 기준으로 잡습니다.
@@ -29,6 +30,20 @@ Now, WinTween only works with your main monitor.</br>
 *(960,540) 으로 위치를 설정하면 모니터 중앙에 위치하지 않는다는 의미.*
 
 * * *
+
+### Namesapce
+```cs
+// Base
+using WinTween;
+
+// Position effect
+using WinTween.Position;
+
+// Scale effect
+using WinTween.Scale;s
+
+```
+
 
 ### 변수들 / variables
 *English comments at code*
