@@ -4,9 +4,6 @@
   "displayName": "WinTween",
   "description": "Make window animation easily",
   "unity": "2020.3",
-  "dependencies": {
-      "ggm.han.wintween": "https://github.com/notdevblue/WinTween.git"
-  },
   "keywords": [
     "Window Animaton",
     "WinTween",
