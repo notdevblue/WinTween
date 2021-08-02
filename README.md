@@ -13,6 +13,19 @@ Now, WinTween only works with your main monitor.</br>
 
 * * *
 
+### 설치 / Installation
+1. 이 저장소의 주소를 복사
+2. Package Manager => Add package from git url
+3. 붙여넣기
+4. 즐기기
+
+1. Copy this repo's url
+2. Package Manager => Add package from git url
+3. paste
+4. enjoy
+
+* * *
+
 ### 사용법 / How to use
 
 1. WindowCore 와 WindowEffects 를 유니티 프로젝트에 추가합니다.
