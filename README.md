@@ -40,7 +40,7 @@ using WinTween;
 using WinTween.Position;
 
 // Scale effect
-using WinTween.Scale;
+using WinTween.Scale;s
 
 ```
 

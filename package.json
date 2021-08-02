@@ -1,0 +1,20 @@
+{
+  "name": "ggm.han.wintween",
+  "version": "0.1.0",
+  "displayName": "WinTween",
+  "description": "Make window animation easily",
+  "unity": "2020.3",
+  "dependencies": {
+      "ggm.han.wintween": "https://github.com/notdevblue/WinTween.git"
+  },
+  "keywords": [
+    "Window Animaton",
+    "WinTween",
+    "Window"
+  ],
+  "author": {
+    "name": "Wooyeop",
+    "email": "wooyeophan@gmail.com",
+    "url": "http://ggm.gondr.net/user/profile/17"
+  }
+}
