@@ -19,6 +19,8 @@ Now, WinTween only works with your main monitor.</br>
 3. 붙여넣기
 4. 즐기기
 
+* * *
+
 1. Copy this repo's url
 2. Package Manager => Add package from git url
 3. paste
